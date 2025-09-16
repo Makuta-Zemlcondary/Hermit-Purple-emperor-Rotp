@@ -25,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class HPHelperDox {
 
 
-    public static LivingEntity HPGeneralObjectives(LivingEntity user, HermitPurpleEntity hermitPurple){
+    public static Entity HPGeneralObjectives(LivingEntity user, HermitPurpleEntity hermitPurple){
         switch (hermitPurple.getMode()){
             case 0:
                 return hpObj(user);
@@ -70,12 +70,12 @@ public class HPHelperDox {
     }
 
 
-    public static LivingEntity HPojectives(LivingEntity user){
+    public static Entity HPojectives(LivingEntity user){
         World world =user.level;
         List<LivingEntity> lista =  world.getEntitiesOfClass(LivingEntity.class,user.getBoundingBox().inflate(1000), EntityPredicates.ENTITY_STILL_ALIVE).stream()
                 .filter(entity -> entity != user)
                 .filter(entity -> entity instanceof PlayerEntity || entity.getMaxHealth()>100).collect(Collectors.toList());
-        LivingEntity fin = null;
+        Entity fin = null;
         if(!lista.isEmpty()){
             int n = lista.size();
             int i = MathHelper.floor(n*Math.random());
@@ -84,7 +84,7 @@ public class HPHelperDox {
         return fin;
     }
 
-    private static LivingEntity hpObj(LivingEntity user){
+    private static Entity hpObj(LivingEntity user){
         if(user instanceof ServerPlayerEntity){
             ServerPlayerEntity player = Objects.requireNonNull(user.getServer()).getPlayerList().getPlayer(user.getUUID());
             ServerWorld world= player.getLevel();
@@ -105,7 +105,7 @@ public class HPHelperDox {
     }
 
 
-    private static LivingEntity HPojectives(LivingEntity user,String ent){
+    private static Entity HPojectives(LivingEntity user,String ent){
         World world =user.level;
         List<LivingEntity> lista =  world.getEntitiesOfClass(LivingEntity.class,user.getBoundingBox().inflate(1000), EntityPredicates.ENTITY_STILL_ALIVE).stream()
                 .filter(entity -> entity.getType().getRegistryName().toString().equals(ent)).collect(Collectors.toList());
@@ -118,19 +118,19 @@ public class HPHelperDox {
         return fin;
     }
 
-    private static LivingEntity hpObj(LivingEntity user, String ent){
+    private static Entity hpObj(LivingEntity user, String ent){
         if(user instanceof ServerPlayerEntity){
             ServerPlayerEntity player = Objects.requireNonNull(user.getServer()).getPlayerList().getPlayer(user.getUUID());
             ServerWorld world= player.getLevel();
 
-            List<Entity> lista =  world.getEntities().filter(entity -> entity instanceof LivingEntity)
+            List<Entity> lista =  world.getEntities()
                     .filter(entity -> entity.getType().getRegistryName().toString().equals(ent))
                     .collect(Collectors.toList());
-            LivingEntity fin = null;
+            Entity fin = null;
             if(!lista.isEmpty()){
                 int n = lista.size();
                 int i = MathHelper.floor(n*Math.random());
-                fin = (LivingEntity) lista.get(i);
+                fin =  lista.get(i);
             }
             return fin;
 

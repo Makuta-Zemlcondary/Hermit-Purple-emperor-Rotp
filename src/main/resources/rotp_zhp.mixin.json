@@ -3,6 +3,7 @@
   "package": "com.zeml.rotp_zhp.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
+    "MixinFirstPersonRenderer",
     "MixinPPlayerRenderer"
   ],
   "injector": {
@@ -10,13 +11,6 @@
   },
   "refmap": "rotp_zhp.mixins-refmap.json",
   "mixins": [
-    "MixinHamonData",
-    "MixinZoomPunchEntity",
-    "actions.MixinHamonOverdrive",
-    "actions.MixinHamonOverdriveBarrage",
-    "actions.MixinHamonOverdriveBeatInstance",
-    "actions.MixinHamonScarletOverdrive$MixinInstance",
-    "actions.MixinHamonSunlightYellowOverdrive$Instance",
-    "actions.MixinHamonSunlightYellowOverdriveBarrage$MixinInstance"
+    "MixinHamonData"
   ]
 }

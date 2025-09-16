@@ -10,6 +10,7 @@ import com.github.standobyte.jojo.init.power.non_stand.ModPowers;
 import com.github.standobyte.jojo.init.power.non_stand.hamon.ModHamonSkills;
 import com.github.standobyte.jojo.power.impl.nonstand.INonStandPower;
 import com.github.standobyte.jojo.power.impl.stand.IStandPower;
+import com.zeml.rotp_zhp.RotpHermitPurpleAddon;
 import com.zeml.rotp_zhp.client.playeranim.anim.AddonPlayerAnimations;
 import com.zeml.rotp_zhp.entity.damaging.projectile.HPVineGrabEntity;
 import com.zeml.rotp_zhp.entity.stand.stands.HermitPurpleEntity;
@@ -65,14 +66,20 @@ public class HPGrabCommand extends StandEntityAction {
         }
     }
 
+
+
+
     @Override
     public void stoppedHolding(World world, LivingEntity user, IStandPower power, int ticksHeld, boolean willFire) {
         invokeForStand(power, stand -> {
             if (stand.getCurrentTaskAction() == this) {
                 if (getLandedVineStand(user).isPresent()) {
+                    RotpHermitPurpleAddon.LOGGER.debug("Not Cancelling the move");
                     return;
                 } else {
+                    RotpHermitPurpleAddon.LOGGER.debug("Task Stopped");
                     stand.stopTaskWithRecovery();
+                    stand.stopTask();
                 }
             }
         });
@@ -80,7 +87,7 @@ public class HPGrabCommand extends StandEntityAction {
 
     public static Optional<HPVineGrabEntity> getLandedVineStand(LivingEntity user) {
         List<HPVineGrabEntity> vineLanded = user.level.getEntitiesOfClass(HPVineGrabEntity.class,
-                user.getBoundingBox().inflate(16), redBind -> user.is(redBind.getOwner()) && redBind.isAttachedToAnEntity());
+                user.getBoundingBox().inflate(16), vineGrab -> user.is(vineGrab.getOwner()) && vineGrab.isAttachedToAnEntity());
         return !vineLanded.isEmpty() ? Optional.of(vineLanded.get(0)) : Optional.empty();
     }
 

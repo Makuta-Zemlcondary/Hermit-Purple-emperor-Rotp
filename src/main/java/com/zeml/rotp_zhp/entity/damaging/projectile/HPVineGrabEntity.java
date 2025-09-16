@@ -9,12 +9,14 @@ import com.github.standobyte.jojo.init.power.stand.ModStandsInit;
 import com.github.standobyte.jojo.power.impl.stand.IStandPower;
 import com.github.standobyte.jojo.util.mc.MCUtil;
 import com.github.standobyte.jojo.util.mod.JojoModUtil;
+import com.zeml.rotp_zhp.client.playeranim.anim.AddonPlayerAnimations;
 import com.zeml.rotp_zhp.init.InitEntities;
 import com.zeml.rotp_zhp.init.InitSounds;
 import com.zeml.rotp_zhp.init.InitStands;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -53,7 +55,7 @@ public class HPVineGrabEntity extends OwnerBoundProjectileEntity {
         }
         if (!level.isClientSide()) {
             if (ownerStand == null || ownerStand.getCurrentTaskAction() != InitStands.HP_GRAB_COMMAND.get() && !isInOverDriveAttack()) {
-                remove();
+                this.remove();
                 return;
             }
         }
@@ -62,7 +64,7 @@ public class HPVineGrabEntity extends OwnerBoundProjectileEntity {
             LivingEntity owner = getOwner();
             if (!bound.isAlive() || owner.distanceToSqr(bound) > 100) {
                 if (!level.isClientSide()) {
-                    remove();
+                    this.remove();
                 }
             }
             else {
@@ -115,6 +117,16 @@ public class HPVineGrabEntity extends OwnerBoundProjectileEntity {
             if (bound != null) {
                 MCUtil.removeEffectInstance(bound, immobilizedEffect);
             }
+        }
+        if(this.getOwner() instanceof PlayerEntity){
+            if( this.level.isClientSide){
+                AddonPlayerAnimations.grab.stopAnim((PlayerEntity) this.getOwner());
+            }else {
+                IStandPower.getPlayerStandPower((PlayerEntity) this.getOwner()).setCooldownTimer(InitStands.HP_GRAB_COMMAND.get(),
+                        this.getOwner().hasEffect(ModStatusEffects.RESOLVE.get())?75:150);
+
+            }
+
         }
     }
 
@@ -174,6 +186,7 @@ public class HPVineGrabEntity extends OwnerBoundProjectileEntity {
                 isInOverDriveAttack() ? Integer.MAX_VALUE : 160
                 : 7;
     }
+
 
     @Override
     protected float movementSpeed() {

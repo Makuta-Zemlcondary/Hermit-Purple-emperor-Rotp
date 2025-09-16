@@ -15,6 +15,7 @@ import com.zeml.rotp_zhp.entity.stand.stands.HermitPurpleEntity;
 
 import com.zeml.rotp_zhp.network.ModNetwork;
 import com.zeml.rotp_zhp.network.packets.ColorPacket;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -59,7 +60,7 @@ public class HPCamera extends StandEntityAction {
         if (!world.isClientSide) {
             LivingEntity cameraUser = standEntity.getUser();
             
-            LivingEntity selectedTarget = HPHelperDox.HPGeneralObjectives(cameraUser, (HermitPurpleEntity) standEntity);
+            Entity selectedTarget = HPHelperDox.HPGeneralObjectives(cameraUser, (HermitPurpleEntity) standEntity);
             if (selectedTarget instanceof ServerPlayerEntity && hasPaper(cameraUser, true)) {
                 ServerPlayerEntity playerToDox = (ServerPlayerEntity) selectedTarget;
                 PacketManager.sendToClient(new PhotoForOtherPlayerPacket(cameraUser.getId()), playerToDox);

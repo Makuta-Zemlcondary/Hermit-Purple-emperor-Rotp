@@ -1,13 +1,16 @@
 package com.zeml.rotp_zhp.util;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.zeml.rotp_zhp.HermitConfig;
 import com.zeml.rotp_zhp.RotpHermitPurpleAddon;
 import com.zeml.rotp_zhp.command.HermitStructureCommand;
 import com.zeml.rotp_zhp.command.HermitTargetCommand;
 import net.minecraft.command.CommandSource;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.World;
 
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,6 +26,10 @@ public class HermitForgeBusEventSubscriber {
         CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
         HermitTargetCommand.register(dispatcher);
         HermitStructureCommand.register(dispatcher);
+    }
 
+    @SubscribeEvent
+    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event){
+        HermitConfig.Common.SyncedValues.onPlayerLogout((ServerPlayerEntity) event.getPlayer());
     }
 }

@@ -42,12 +42,9 @@ public class HPVineEntity extends OwnerBoundProjectileEntity {
     private float hamonDamageCost;
     private boolean spendHamonStability;
     private boolean ischarge;
-    private boolean spreed;
-    private boolean ishamonstu;
     private float baseHitPoints;
     private boolean gaveHamonPointsForBaseHit = false;
-    private boolean scarlet;
-    private float hamomlevel;
+
 
 
     public HPVineEntity(World world, LivingEntity entity, float angleXZ, float angleYZ, boolean isBinding) {
@@ -66,9 +63,6 @@ public class HPVineEntity extends OwnerBoundProjectileEntity {
         return true;
     }
 
-    public boolean isBinding() {
-        return isBinding;
-    }
 
 
     @Override
@@ -94,27 +88,7 @@ public class HPVineEntity extends OwnerBoundProjectileEntity {
         LivingEntity hamonOwner = owner instanceof StandEntity? ((StandEntity) owner).getUser():owner;
         IStandPower standPower = IStandPower.getStandPowerOptional(hamonOwner).map(power -> power).isPresent()? IStandPower.getStandPowerOptional(hamonOwner).map(power -> power).get():null;
 
-        if(scarlet){
-            INonStandPower.getNonStandPowerOptional(hamonOwner).ifPresent(ipower->{
-
-                Optional<HamonData> hamonOp = ipower.getTypeSpecificData(ModPowers.HAMON.get());
-                if(hamonOp.isPresent()){
-                    HamonData hamon = hamonOp.get();
-                    float cost = 200 + (float) hamon.getHamonStrengthLevel();
-                    hamon.hamonPointsFromAction(BaseHamonSkill.HamonStat.STRENGTH,cost);
-                    hamon.hamonPointsFromAction(BaseHamonSkill.HamonStat.CONTROL,cost);
-                }});
-            if(standPower != null){
-                DamageUtil.dealDamageAndSetOnFire(target,
-                        entity -> StandHamonDamage.dealHamonDamage(entity, .27F, hamonOwner , null, attack -> attack.hamonParticle(ModParticles.HAMON_SPARK_RED.get()),standPower, this.isBinding?.3F:1,this.isBinding?.5F:1.25F),
-                        MathHelper.floor(2 + 8F *  hamomlevel / (float) HamonData.MAX_STAT_LEVEL * hamonDamageCost), false);
-            }else {
-                DamageUtil.dealDamageAndSetOnFire(target,
-                        entity -> DamageUtil.dealHamonDamage(entity, .27F, hamonOwner , null, attack -> attack.hamonParticle(ModParticles.HAMON_SPARK_RED.get())),
-                        MathHelper.floor(2 + 8F *  hamomlevel / (float) HamonData.MAX_STAT_LEVEL * hamonDamageCost), false);
-            }
-
-        } else if(ischarge){
+        if(ischarge){
             INonStandPower.getNonStandPowerOptional(hamonOwner).ifPresent(ipower->{
                 Optional<HamonData> hamonOp = ipower.getTypeSpecificData(ModPowers.HAMON.get());
                 if(hamonOp.isPresent()){
@@ -125,7 +99,6 @@ public class HPVineEntity extends OwnerBoundProjectileEntity {
                 }});
             if(standPower != null){
                 StandHamonDamage.dealHamonDamage(target, .4F, hamonOwner , null, attack -> attack.hamonParticle(ModParticles.HAMON_SPARK.get()),standPower,this.isBinding?.3F:1,this.isBinding?.5F:1.25F);
-
             }else {
                 DamageUtil.dealHamonDamage(target, .4F, hamonOwner , null, attack -> attack.hamonParticle(ModParticles.HAMON_SPARK.get()));
 
@@ -149,24 +122,23 @@ public class HPVineEntity extends OwnerBoundProjectileEntity {
             if (isBinding) {
                 if (target instanceof LivingEntity) {
                     LivingEntity livingTarget = (LivingEntity) target;
-
-
                     if (!JojoModUtil.isTargetBlocking(livingTarget)) {
                         attachToEntity(livingTarget);
-                        if(ishamonstu){
-                            livingTarget.addEffect(new EffectInstance(ModStatusEffects.HAMON_SHOCK.get(), ticksLifespan() - tickCount));
-                        }else {
-                            livingTarget.addEffect(new EffectInstance(ModStatusEffects.STUN.get(), ticksLifespan() - tickCount));
-
-                        }
-
-
+                        livingTarget.addEffect(new EffectInstance(ModStatusEffects.STUN.get(), ticksLifespan() - tickCount));
                     }
                 }
             }
             else {
                 if (knockback > 0 && target instanceof LivingEntity) {
                     DamageUtil.knockback((LivingEntity) target, knockback, yRot);
+                    if(this.getOwner() != null){
+                        IStandPower.getStandPowerOptional(this.getOwner()).ifPresent(power -> {
+                            if(power.getStandManifestation() instanceof StandEntity && power.getResolveLevel() > 0){
+                                float mul = this.getOwner().hasEffect(ModStatusEffects.RESOLVE.get())? 2:1;
+                                ((StandEntity) power.getStandManifestation()).addFinisherMeter(.085F*mul,40);
+                            }
+                        });
+                    }
                 }
                 setIsRetracting(true);
             }
@@ -199,7 +171,7 @@ public class HPVineEntity extends OwnerBoundProjectileEntity {
                             level.getEntitiesOfClass(HamonBlockChargeEntity.class,
                                     new AxisAlignedBB(Vector3d.atCenterOf(blockPos), Vector3d.atCenterOf(blockPos))).forEach(Entity::remove);
                             HamonBlockChargeEntity charge = new HamonBlockChargeEntity(level, blockRayTraceResult.getBlockPos());
-                            charge.setCharge(0.02F * hamon.getHamonDamageMultiplier() * 60, 200, finalUser, 200F);
+                            charge.setCharge(0.02F * hamon.getHamonDamageMultiplier() * 60, 20, finalUser, 200F);
                             level.addFreshEntity(charge);
                         }
                     }
@@ -325,13 +297,7 @@ public class HPVineEntity extends OwnerBoundProjectileEntity {
         this.ischarge=charg;
     }
 
-    public void isScarlet(boolean scarlet, float hamonlvl){
-        this.scarlet=scarlet;
-        this.hamomlevel=hamonlvl;
-    }
-    public void hamonStuned(boolean stun){
-        this.ishamonstu =stun;
-    }
+
 
 
     public HPVineEntity setHamonDamageOnHit(float damage, float hitCost, boolean useBreathStab){
@@ -346,8 +312,6 @@ public class HPVineEntity extends OwnerBoundProjectileEntity {
         return this;
     }
 
-    public void isSpread(boolean spred){
-        this.spreed = spred;
-    }
+
 
 }

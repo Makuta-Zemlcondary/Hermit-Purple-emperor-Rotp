@@ -3,20 +3,25 @@
   "stand.rotp_zhp.hermito_purple": "『隱者之紫』",
 
   "action.rotp_zhp.hp_vine_attack": "藤蔓攻擊",
+  "action.rotp_zhp.hp_beat": "「波紋疾走連打！」",
   "action.rotp_zhp.hp_vine_shift": "藤蔓纏繞攻擊",
   "action.rotp_zhp.hp_grab": "纏繞實體",
   "action.rotp_zhp.hp_grab_od": "傳導波紋疾走",
+  "action.rotp_zhp.hp_grab_sc": "Scarlet OverDrive grabbed entity",
+  "action.rotp_zhp.hp_grab_heal": "Healing vine",
   "action.rotp_zhp.cringe": "OH NO CRINGE",
-
-
 
   "action.rotp_zhp.hp_breath": "波紋呼吸",
   "action.rotp_zhp.hp_block": "纏繞護體",
-  "action.rotp_zhp.hp_vine":"藤蔓穿梭",
+  "action.rotp_zhp.hp_vine": "藤蔓穿梭",
   "action.rotp_zhp.hp_vine_entity": "抓取實體",
   "action.rotp_zhp.hp_doxx": "念寫",
   "action.rotp_zhp.hp_doxx.s": "念寫以尋找 ",
+  "action.rotp_zhp.hp_doxx.stand": "%s user position divination",
+  "action.rotp_zhp.hp_doxx_user": "'s user",
   "action.rotp_zhp.hp_camera": "照片念寫",
+  "action.rotp_zhp.hp_camera.s": "%s photo divination",
+  "action.rotp_zhp.hp_camera.stand": "%s user photo divination",
   "action.rotp_zhp.hp_target": "選擇目標",
   "action.rotp_zhp.hp_barrier": "藤蔓陷阱 (已佈置%s條/共可佈置%s條)",
   "action.rotp_zhp.hp_unbarrier": "收回所有藤蔓",
@@ -34,8 +39,9 @@
 
   "jojo.message.action_condition.no_hamon": "你需要學習波紋",
   "jojo.message.action_condition.no_map": "你的副手需要一張空地圖",
-  "jojo.message.action_condition.no_paper": "你需要紙",
+  "jojo.message.action_condition.no_player_target": "You need to select a player as a target",
   "jojo.message.action_condition.strings_learn": "你需要學習波紋絲線結界",
+  "jojo.message.action_condition.no_healing": "You need to learn Healing Touch",
 
   "filled_map.divination": "地圖：尋找",
 
@@ -43,13 +49,26 @@
   "gui.hermitpurpletarget.tab_all": "玩家",
   "gui.hermitpurpletarget.tab_hidden": "實體",
   "gui.hermitpurpletarget.tab_blocked": "結構",
+  "gui.hermitpurpletarget.tab_stands": "Stands",
+  "gui.hermitpurpletarget.tab_biomes": "Biomes",
   "gui.hermitpurpletarget.search_empty": "找不到目標",
   "gui.hermitpurpletarget.random": "隨機",
-
 
   "rotp_zhp.config.hamonToHermit": "給予『隱者之紫』波紋",
   "rotp_zhp.config.control": "需要波紋控制",
   "rotp_zhp.config.strength": "需要波紋力量",
-  "rotp_zhp.config.breathing": "波紋呼吸強度"
+  "rotp_zhp.config.breathing": "波紋呼吸強度",
+  "rotp_zhp.config.hermitHamon": "Can Hermit Purple make hamon attacks target Stands?",
 
+  "entity.rotp_zhp.hp_vine": "Hermit Purple Vine",
+  "entity.rotp_zhp.hp_barrier": "Hermit Purple Vine Barrier",
+  "entity.rotp_zhp.hp_grab_vine": "Hermit Purple Grab Vine",
+  "entity.rotp_zhp.hp_grappling_vine": "Hermit Purple Grappling Vine",
+
+  "entity.epicfight.wither_ghost": "Wither Ghost",
+  "entity.jojo.dummy": "Dummy",
+
+  "commands.hermit.player.success": "%s has been set as your Hermit purple's target",
+  "commands.hermit_target.failed.single": "Failed at putting a target to Hermit Purple",
+  "jojo.message.action_condition.no_paper": "你需要紙"
 }

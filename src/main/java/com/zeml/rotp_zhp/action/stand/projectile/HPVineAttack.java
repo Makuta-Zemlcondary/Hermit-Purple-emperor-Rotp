@@ -1,8 +1,10 @@
 package com.zeml.rotp_zhp.action.stand.projectile;
 
+import com.github.standobyte.jojo.action.Action;
 import com.github.standobyte.jojo.action.ActionTarget;
 import com.github.standobyte.jojo.action.non_stand.HamonCutter;
 import com.github.standobyte.jojo.action.stand.IHasStandPunch;
+import com.github.standobyte.jojo.action.stand.StandAction;
 import com.github.standobyte.jojo.action.stand.StandEntityAction;
 import com.github.standobyte.jojo.action.stand.StandEntityHeavyAttack;
 import com.github.standobyte.jojo.action.stand.punch.StandBlockPunch;
@@ -26,7 +28,9 @@ import com.github.standobyte.jojo.util.mc.damage.StandEntityDamageSource;
 import com.github.standobyte.jojo.util.mod.JojoModUtil;
 import com.zeml.rotp_zhp.client.playeranim.anim.AddonPlayerAnimations;
 import com.zeml.rotp_zhp.entity.damaging.projectile.HPVineEntity;
+import com.zeml.rotp_zhp.entity.damaging.projectile.HPVineGrabEntity;
 import com.zeml.rotp_zhp.init.InitSounds;
+import com.zeml.rotp_zhp.init.InitStands;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -41,6 +45,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class HPVineAttack extends StandEntityAction {
@@ -49,9 +54,24 @@ public class HPVineAttack extends StandEntityAction {
         super(builder);
     }
 
+
     @Override
     public int getStandWindupTicks(IStandPower standPower, StandEntity standEntity) {
         return Math.max(super.getStandWindupTicks(standPower, standEntity) - getStandActionTicks(standPower, standEntity) / 2, 3);
+    }
+
+
+    @Nullable
+    @Override
+    protected Action<IStandPower> replaceAction(IStandPower power, ActionTarget target) {
+        if(power.getStandManifestation() instanceof StandEntity){
+            Optional<HPVineEntity> optional = getLandedVineStand(power.getUser());
+            if(optional.isPresent() && optional.get().getEntityAttachedTo() != null
+                    && ((StandEntity) power.getStandManifestation()).getFinisherMeter() > .5F){
+                return InitStands.BEAT.get();
+            }
+        }
+        return super.replaceAction(power, target);
     }
 
     @Override
@@ -110,8 +130,6 @@ public class HPVineAttack extends StandEntityAction {
         }
         vine.setLifeSpan(getStandActionTicks(standPower, standEntity));
         vine.isCharged(false);
-        vine.isSpread(false);
-        vine.isScarlet(false,0);
         vine.withStandSkin(standEntity.getStandSkin());
         standEntity.addProjectile(vine);
         INonStandPower.getNonStandPowerOptional(standPower.getUser()).ifPresent(ipower->{
@@ -130,13 +148,16 @@ public class HPVineAttack extends StandEntityAction {
                     vine.setBaseUsageStatPoints(Math.min(30, ipower.getEnergy()) * hamonEfficiency);
 
                 }
-                if(hamon.isSkillLearned(ModHamonSkills.HAMON_SHOCK.get())&& ipower.getEnergy()>0){
-                    vine.hamonStuned(true);
-                }
+
             }
         });
     }
 
+    public static Optional<HPVineEntity> getLandedVineStand(LivingEntity user) {
+        List<HPVineEntity> vineLanded = user.level.getEntitiesOfClass(HPVineEntity.class,
+                user.getBoundingBox().inflate(16), vineGrab -> user.is(vineGrab.getOwner()) && vineGrab.isAttachedToAnEntity());
+        return !vineLanded.isEmpty() ? Optional.of(vineLanded.get(0)) : Optional.empty();
+    }
 
 
     @Override
@@ -166,4 +187,8 @@ public class HPVineAttack extends StandEntityAction {
         super.playSound(standEntity, standPower, phase, task);
     }
 
+    @Override
+    public StandAction[] getExtraUnlockable() {
+        return new StandAction[] {InitStands.BEAT.get()};
+    }
 }

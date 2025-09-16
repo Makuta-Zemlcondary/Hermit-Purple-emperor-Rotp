@@ -10,7 +10,6 @@ import net.minecraftforge.common.util.INBTSerializable;
 public class LivingData implements INBTSerializable<CompoundNBT> {
     private final LivingEntity entity;
     private boolean triedHermit = false;
-    private boolean canLeap = false;
     private boolean isBreathing = false;
 
     public LivingData(LivingEntity entity) {
@@ -25,17 +24,6 @@ public class LivingData implements INBTSerializable<CompoundNBT> {
         return this.triedHermit;
     }
 
-    public void setCanLeap(boolean canLeap) {
-        this.canLeap = canLeap;
-        if(entity instanceof ServerPlayerEntity){
-            ModNetwork.sendToClient(new CanLeapPacket(entity.getId(),canLeap), (ServerPlayerEntity) entity);
-        }
-    }
-
-    public boolean isCanLeap() {
-        return canLeap;
-    }
-
 
 
     public void syncWithAnyPlayer(ServerPlayerEntity player) {
@@ -45,7 +33,7 @@ public class LivingData implements INBTSerializable<CompoundNBT> {
 
     // If there is data that should only be known to the player, and not to other ones, sync it here instead.
     public void syncWithEntityOnly(ServerPlayerEntity player) {
-        ModNetwork.sendToClient(new CanLeapPacket(player.getId(),this.canLeap), player);
+
     }
 
 
@@ -54,13 +42,11 @@ public class LivingData implements INBTSerializable<CompoundNBT> {
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = new CompoundNBT();
         nbt.putBoolean("TriedHermitPurple",this.triedHermit);
-        nbt.putBoolean("canPurpleLeap",this.canLeap);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         this.triedHermit = nbt.getBoolean("TriedHermitPurple");
-        this.canLeap = nbt.getBoolean("canPurpleLeap");
     }
 }

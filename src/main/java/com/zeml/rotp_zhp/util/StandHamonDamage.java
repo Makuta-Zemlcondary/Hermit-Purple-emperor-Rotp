@@ -147,10 +147,6 @@ public class StandHamonDamage {
 
 
 
-    public static boolean dealHamonDamage(Entity target, float amount, @Nullable Entity srcDirect, @Nullable Entity srcIndirect,IStandPower standPower, float standVampirism, float standNormal) {
-        return dealHamonDamage(target, amount, srcDirect, srcIndirect, null, standPower, standVampirism, standNormal);
-    }
-
     public static boolean dealHamonDamage(Entity target, float amount, @Nullable Entity srcDirect,
                                           @Nullable Entity srcIndirect, @Nullable Consumer<StandHamonDamage.StandHamonAttackProperties> attackProperties,
                                           IStandPower standPower, float standVampirism, float standNormal
@@ -158,8 +154,10 @@ public class StandHamonDamage {
         if (target instanceof LivingEntity) {
             LivingEntity livingTarget = (LivingEntity) target;
 
-            if(target instanceof StandEntity){
+            if(target instanceof StandEntity && ((StandEntity) target).getUser() != null){
                 livingTarget = ((StandEntity) target).getUser();
+                amount *= JojoModUtil.isAffectedByHamon(livingTarget)? standVampirism : standNormal;
+
             }
 
             StandHamonAttackProperties attack = new StandHamonAttackProperties();
@@ -216,7 +214,6 @@ public class StandHamonDamage {
             }
             amount *= JojoModConfig.getCommonConfigInstance(false).hamonDamageMultiplier.get().floatValue();
 
-//            JojoMod.LOGGER.debug(amount);
 
             if (hurtThroughInvulTicks(target, new StandEntityDamageSource(DamageUtil.HAMON.getMsgId() + ".entity", srcDirect, standPower), amount)) {
                 HamonUtil.createHamonSparkParticlesEmitter(target, amount / (HamonData.MAX_HAMON_STRENGTH_MULTIPLIER * 5), attack.soundVolumeMultiplier, attack.hamonParticle);

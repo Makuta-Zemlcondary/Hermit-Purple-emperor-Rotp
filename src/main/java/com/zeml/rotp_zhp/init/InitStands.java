@@ -5,6 +5,7 @@ import com.github.standobyte.jojo.action.stand.StandEntityAction;
 import com.github.standobyte.jojo.entity.stand.StandPose;
 import com.github.standobyte.jojo.init.ModSounds;
 import com.zeml.rotp_zhp.RotpHermitPurpleAddon;
+import com.zeml.rotp_zhp.action.BeatFollowUp;
 import com.zeml.rotp_zhp.action.stand.*;
 import com.zeml.rotp_zhp.action.stand.projectile.*;
 import com.zeml.rotp_zhp.entity.stand.stands.HermitPurpleEntity;
@@ -50,7 +51,7 @@ public class InitStands {
     public static final RegistryObject<StandEntityAction> HP_GRAB_COMMAND = ACTIONS.register("hp_grab",
             () -> new HPGrabCommand(new StandEntityAction.Builder().staminaCost(40).standWindupDuration(5)
                     .resolveLevelToUnlock(2).swingHand().holdType().standUserWalkSpeed(1.0F)
-                    .cooldown(150,0,0.5F).shout(InitSounds.USER_THROW)
+                    .shout(InitSounds.USER_THROW)
                     .standSound(StandEntityAction.Phase.PERFORM,InitSounds.VINE_TRHOW)
                     ));
     public static final RegistryObject<StandEntityAction> HP_GRAB_OVERDRIVE = ACTIONS.register("hp_grab_od",
@@ -126,6 +127,9 @@ public class InitStands {
     public static final RegistryObject<StandEntityAction> HP_TARGET =ACTIONS.register("hp_target",
             ()-> new HPTargetSelection(new StandEntityAction.Builder()
             ));
+
+    public static final RegistryObject<StandEntityAction> BEAT = ACTIONS.register("hp_beat",
+            ()->new BeatFollowUp(new StandEntityAction.Builder()));
 
     public static final EntityStandRegistryObject<HermitPurpleStandType<StandStats>, StandEntityType<HermitPurpleEntity>> STAND_HERMITO_PURPLE =
             new EntityStandRegistryObject<>("hermito_purple",

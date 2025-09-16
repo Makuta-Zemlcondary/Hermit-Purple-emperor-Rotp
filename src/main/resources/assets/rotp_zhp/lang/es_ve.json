@@ -3,13 +3,13 @@
   "stand.rotp_zhp.hermito_purple": "Hermito Púrpura",
 
   "action.rotp_zhp.hp_vine_attack": "Ataque de Enredadera",
+  "action.rotp_zhp.hp_beat": "Golpe de Hamon",
   "action.rotp_zhp.hp_vine_shift": "Ataque de Atadura de enredadera",
   "action.rotp_zhp.hp_grab": "Agarrar Entidad",
   "action.rotp_zhp.hp_grab_od": "Agarre de Entidad OverDrive",
   "action.rotp_zhp.hp_grab_sc": "Agarre de Entidad OverDrive Escarlata",
   "action.rotp_zhp.hp_grab_heal": "Enredadera Sanadora",
   "action.rotp_zhp.cringe": "OH NO CRINGE",
-
 
   "action.rotp_zhp.hp_breath": "Respiración Hamon",
   "action.rotp_zhp.hp_block": "Espinas Hermito",
@@ -54,14 +54,20 @@
   "gui.hermitpurpletarget.search_empty": "No se encontro un objetivo con ese nombre",
   "gui.hermitpurpletarget.random": "Aleatorio",
 
-
   "rotp_zhp.config.hamonToHermit": "Hamon otorga Hermito Púrpira",
   "rotp_zhp.config.control": "Control de Hamon Requerido",
   "rotp_zhp.config.strength": "Fuerza de Hamon Requerida",
   "rotp_zhp.config.breathing": "Fuerza de Respiracion de Hamon",
+  "rotp_zhp.config.hermitHamon": "Can Hermit Purple make hamon attacks target Stands?",
 
-
+  "entity.rotp_zhp.hp_vine": "Hermit Purple Vine",
+  "entity.rotp_zhp.hp_barrier": "Hermit Purple Vine Barrier",
+  "entity.rotp_zhp.hp_grab_vine": "Hermit Purple Grab Vine",
+  "entity.rotp_zhp.hp_grappling_vine": "Hermit Purple Grappling Vine",
 
   "entity.epicfight.wither_ghost": "Fantasma Wither",
-  "entity.jojo.dummy": "Muñeco"
+  "entity.jojo.dummy": "Muñeco",
+
+  "commands.hermit.player.success": "%s has been set as your Hermit purple's target",
+  "commands.hermit_target.failed.single": "Failed at putting a target to Hermit Purple"
 }

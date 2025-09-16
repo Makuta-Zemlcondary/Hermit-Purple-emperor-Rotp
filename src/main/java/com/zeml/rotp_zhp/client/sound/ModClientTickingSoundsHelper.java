@@ -25,7 +25,6 @@ public abstract class ModClientTickingSoundsHelper {
                                                             StandEntityAction action, @Nullable StandEntityAction.Phase phase, float volume, float pitch, boolean looping) {
         Minecraft mc = Minecraft.getInstance();
 
-
         SoundCategory category = stand.getSoundSource();
         PlaySoundAtEntityEvent event = ForgeEventFactory.onPlaySoundAtEntity(stand, sound, category, volume, pitch);
         if (event.isCanceled() || event.getSound() == null) return;

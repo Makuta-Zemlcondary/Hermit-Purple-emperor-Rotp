@@ -21,6 +21,7 @@ import com.zeml.rotp_zhp.init.InitStands;
 import com.zeml.rotp_zhp.init.InitTags;
 import com.zeml.rotp_zhp.network.ModNetwork;
 import com.zeml.rotp_zhp.network.packets.ColorPacket;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FilledMapItem;
@@ -83,18 +84,18 @@ public class HPDoxx extends StandEntityAction {
             String target = null;
             ItemStack itemStack = userPower.getUser().getItemInHand(Hand.OFF_HAND);
             if(((HermitPurpleEntity) standEntity).getMode() < 3){
-                LivingEntity ent = HPHelperDox.HPGeneralObjectives(userPower.getUser(),(HermitPurpleEntity) standEntity);
+                Entity ent = HPHelperDox.HPGeneralObjectives(userPower.getUser(),(HermitPurpleEntity) standEntity);
                 if(ent != null){
                     blockPos= ent.blockPosition();
                     target = ent.getName().getString();
-                    if(userPower.getUser().hasEffect(ModStatusEffects.RESOLVE.get())){
+                    if(userPower.getUser().hasEffect(ModStatusEffects.RESOLVE.get()) && ent instanceof LivingEntity){
                         INonStandPower.getNonStandPowerOptional(userPower.getUser()).ifPresent(ipower ->{
                             if (ipower.getType() == ModPowers.HAMON.get()){
                                 Optional<HamonData> hamonOp = ipower.getTypeSpecificData(ModPowers.HAMON.get());
                                 HamonData hamon = hamonOp.get();
                                 if(hamon.isSkillLearned(ModHamonSkills.DETECTOR.get())){
                                     int seconds = Objects.requireNonNull(userPower.getUser().getEffect(ModStatusEffects.RESOLVE.get())).getDuration();
-                                    ent.addEffect(new EffectInstance(Effects.GLOWING,seconds/4));
+                                    ((LivingEntity) ent).addEffect(new EffectInstance(Effects.GLOWING,seconds/4));
                                 }
                             }
                         });

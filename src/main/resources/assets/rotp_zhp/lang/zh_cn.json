@@ -3,6 +3,7 @@
   "stand.rotp_zhp.hermito_purple": "紫色隐者",
 
   "action.rotp_zhp.hp_vine_attack": "藤蔓攻击",
+  "action.rotp_zhp.hp_beat": "Hamon Beat",
   "action.rotp_zhp.hp_vine_shift": "藤蔓缠绕攻击",
   "action.rotp_zhp.hp_grab": "捆绑生物",
   "action.rotp_zhp.hp_grab_od": "传导波纹疾走",
@@ -69,5 +70,7 @@
 
   "commands.hermit.player.success": "已设定念写目标为%s",
   "commands.hermit_target.failed.single": "设定目标未成功",
-  "jojo.message.action_condition.no_paper": "你需要纸"
+  "jojo.message.action_condition.no_paper": "你需要纸",
+
+
 }
