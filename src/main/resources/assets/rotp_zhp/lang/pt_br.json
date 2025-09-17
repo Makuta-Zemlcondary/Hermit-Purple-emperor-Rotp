@@ -3,7 +3,6 @@
   "stand.rotp_zhp.hermito_purple": "Hermit Purple",
 
   "action.rotp_zhp.hp_vine_attack": "Ataque de vinhas",
-  "action.rotp_zhp.hp_beat": "Sobrecarga Batida de Hamon",
   "action.rotp_zhp.hp_vine_shift": "Ataque de amarração de vinhass",
   "action.rotp_zhp.hp_grab": "Agarrar entidade",
   "action.rotp_zhp.hp_grab_od": "Entidade agarrada por Overdrive",
@@ -68,6 +67,31 @@
   "entity.epicfight.wither_ghost": "Fantasma do Wither",
   "entity.jojo.dummy": "Boneco de testes",
 
+
+  "comment": "EMPEROR STUFF",
+
+  "entity.rotp_zhp.the_emperor": "Emperador",
+  "stand.rotp_zhp.the_emperor": "Emperador",
+
+  "item.rotp_zhp.emperor": "Emperador",
+
+  "action.rotp_zhp.give_emp": "Invocar Emperador",
+  "action.rotp_zhp.target": "Alvos Atuais: %s",
+  "action.rotp_zhp.stand_target": "Definir Alvo",
+  "action.rotp_zhp.no_stand_target": "Remover Alvo Específico",
+
+  "rotp_zhp.type.random": "Aleatório",
+  "rotp_zhp.type.players": "Jogadores",
+  "rotp_zhp.type.hostile": "Criaturas Hostis",
+  "rotp_zhp.type.non": "Apenas uma arma, espero que você esteja feliz",
+
+  "rotp_zhp.subtitle.emp_shot": "Disparo do Emperador",
+  "rotp_zhp.subtitle.emp_user": "\"Emperador\"",
+  "rotp_zhp.subtitle.emp_summon": "Invocar Emperador",
+  "rotp_zhp.subtitle.emp_umsummon": "Recolher Emperador",
+
   "commands.hermit.player.success": "%s foi definido como o alvo do seu Hermit Purple",
-  "commands.hermit_target.failed.single": "Falha ao definir um alvo para o Hermit Purple"
+  "commands.hermit_target.failed.single": "Falha ao definir um alvo para o Hermit Purple",
+
+  "action.rotp_zhp.hp_beat": "Sobrecarga Batida de Hamon"
 }

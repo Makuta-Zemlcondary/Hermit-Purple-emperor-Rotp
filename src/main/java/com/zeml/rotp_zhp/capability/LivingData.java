@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 public class LivingData implements INBTSerializable<CompoundNBT> {
     private final LivingEntity entity;
     private boolean triedHermit = false;
-    private boolean isBreathing = false;
+    private int mode = 0;
 
     public LivingData(LivingEntity entity) {
         this.entity = entity;
@@ -22,6 +22,14 @@ public class LivingData implements INBTSerializable<CompoundNBT> {
 
     public boolean isTriedHermit() {
         return this.triedHermit;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+
+    public int getMode() {
+        return this.mode;
     }
 
 
@@ -42,11 +50,13 @@ public class LivingData implements INBTSerializable<CompoundNBT> {
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = new CompoundNBT();
         nbt.putBoolean("TriedHermitPurple",this.triedHermit);
+        nbt.putInt("mode",this.mode);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         this.triedHermit = nbt.getBoolean("TriedHermitPurple");
+        this.mode = nbt.getInt("mode");
     }
 }
