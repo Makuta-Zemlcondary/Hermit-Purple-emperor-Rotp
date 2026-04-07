@@ -9,6 +9,7 @@ import com.zeml.rotp_zhp.client.render.entity.model.stand.HermitoUserModel;
 import com.zeml.rotp_zhp.client.render.entity.renderer.HermitoThorns;
 import com.zeml.rotp_zhp.client.render.entity.renderer.HermitoUserLayer;
 import com.zeml.rotp_zhp.client.render.entity.renderer.damaging.projectile.*;
+import com.zeml.rotp_zhp.client.render.entity.renderer.stand.EmperorRenderer;
 import com.zeml.rotp_zhp.client.render.entity.renderer.stand.HermitPurpleRenderer;
 import com.zeml.rotp_zhp.init.AddonStands;
 
@@ -41,6 +42,9 @@ public class ClientInit {
         RenderingRegistry.registerEntityRenderingHandler(InitEntities.HP_VINE.get(), HPVineRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(InitEntities.HP_GRAB_ENTITY.get(), HPVineGrabRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(InitEntities.HP_BARRIER.get(), HPVineBarrierRrnderer::new);
+
+        RenderingRegistry.registerEntityRenderingHandler(AddonStands.EMPEROR_STAND.getEntityType(), EmperorRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(InitEntities.EMPEROR_BULLET.get(), EmperorBulletRenderer::new);
 
 
         event.enqueueWork(() -> {
